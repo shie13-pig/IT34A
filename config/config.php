@@ -24,8 +24,8 @@ try{
     );
     //echo ("Connection Successful");
     // echo ($user_id , $user_email , 'connect_db', 'success');
-    // logActivity($pdo,$user_id,$user_email,'connect_db', 'success');
-
+    // logActivity($
+    //bayot ko sir
 }catch(PDOException $e){
     die("Connection failed: " . $e->getMessage());
 }
