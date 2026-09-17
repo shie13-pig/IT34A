@@ -4,9 +4,9 @@ require_once('C:\xampp\htdocs\IT34A\config\config.php');
 $user_id = "root" ?? null;
 $user_email = "root" ?? null;
 
-$buttons = [
-    'login',
-    'logout',
+$button = [
+    'Login',
+    'Logout',
     'Create Record',
     'Update Record',
     'Delete Record',
@@ -14,52 +14,51 @@ $buttons = [
     'Upload File',
     'Download',
     'Search',
-    'Generate Report'
+    'Generate Report',
 ];
-
 ?>
-<table border ="1" cellpadding= "1">
+<table border="1" cellpadding="7" cellspacing="7">
     <tr>
-        <th>ActionM</th>
+        <th>Action</th>
         <th>Test</th>
-</tr>
-    <?php foreach($buttons as $button): ?>
-      <tr>
-        <td><?= htmlspecialchars($button)?></td>
-        <td>
-            <form method="post">
-                <input type="hidden" name="action"
-                        value="<?= htmlspecialchars($button)?>"
+        </tr>
+        <?php foreach ($button as $button):?>
+            <tr>
+            <td><?= htmlspecialchars($button) ?></td>
+            <td>
+                    <form method="post">
+                        <input type= "hidden" name="action"
+                        value="<?= htmlspecialchars($button) ?>"
                         >
                         <button type="submit">Test</button>
-             </form>
-        </td>
-    </tr>
-    <?php endforeach;?>
+                    </form>
+                </td>
+
+            </tr>
+
+        <?php endforeach; ?>
 </table>
-
 <?php
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-     $action = $_POST['action'] ?? "test_activity";
+            $action = $_POST['action'] ?? "test activity";
 
-     $status = random_int(0,1) === 1? 'success' : 'failed';
+            $status = random_int(0, 1) === 1? 'success' : 'failed';
 
-     $success = logActivity(
-        $pdo,
-        $user_id,
-        $user_email,
-        $action,
-        $status
-     );
+            $success = logActivity(
+                $pdo,
+                $user_id,
+                $user_email,
+                $action,
+                $status
+            );
 
-     if ($success){
-    
-        echo "<p> Activity: ". htmlspecialchars($action) .
-        " Status: " . htmlspecialchars($status) .
-        " Log inserted successfully</p>";
-     }else{
-       echo "<p>Failed to insert activity log</p>";
+            if($success) {
+                echo"<p> Activity: " . htmlspecialchars($action) . 
+                " Status: " . htmlspecialchars($status) . 
+                    " Log inserted successfully.</p>";
+                } else{
+                    echo "<p> Failed to insert activity log.</p>";
+                }
 }
-        }
 ?>

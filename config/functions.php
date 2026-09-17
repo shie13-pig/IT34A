@@ -19,8 +19,8 @@ function loginUser($pdo, $login, $password){
             LIMIT 1
     
     ";
-    $stmt = $pdo->prepare($sql) 
-    $stmt->execute(['login' => $login]);
+    $stmt = $pdo->prepare($sql) ;
+    $stmt->execute([':login' => $login]);
 
     $user = $stmt->fetch();
 

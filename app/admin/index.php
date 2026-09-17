@@ -1,49 +1,110 @@
 <?php
-require 'C:\xampp\htdocs\IT34A\config\config.php';
-require 'C:\xampp\htdocs\IT34A\config\config/functions.php';
+require_once 'C:\xampp\htdocs\IT34A\config\config.php';
+require_once 'C:\xampp\htdocs\IT34A\config\functions.php';
 
-if (isset($_SESSION['user_id'])){
-    hear('Location: ' . BASE_URL . '/app/ . $_SESSION['user_role'] . '/index.php');
-    exit;
-}
+requireRole('admin');
+
+logActivity(
+    $pdo,
+    $_SESSION['user_id'],
+    $_SESSION['user_email'],
+    'view_activity_log'
+);
+
+# Query #3 Get All Activity Logs
+$stmt = $pdo->query("
+    SELECT * 
+    FROM activity_logs 
+    ORDER BY activity_log_created_at DESC
+");
+
+$activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-$error= '';
-
-if($_SERVER['REQUEST METHOD'] === 'POST'){
-$login = trim($_POST['login'] ?? '');
-$password = $_POST['password'] ?? '');
-
-if(loginUser($pdo,$login,$password)){
-    header('Location: '. BASE_URL . '/app/'. $_SESSION['user_role']. '/index.php');
-    exit;
-}
-    $error = 'Invalid login credentials';
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
     <h1>Hello Admin</h1>
-    <form method="POST">
-        <label> Username or Email</label>
-        <input type="text"
-        name="login"
-        required
-    >
-    <br>
-    <label>Password</label>
-    <input type="password"
-        name="password"
-        required
-    >
-    <br>
-    <button type="submit">Sign In</button>
-</form>
+    <a href="../auth/signout.php">Sign Out</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Email</th>
+                <th>Action</th>
+                <th>Status</th>
+                <th>IP Address</th>
+                <th>User Agent</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($activities as $activity): ?>
+                <tr>
+                    <td>
+                        <?= htmlspecialchars(
+                            $activity['activity_log_id']
+                        ) ?>
+                    </td>
+
+                    <td>
+                        <?= htmlspecialchars(
+                            $activity['user_id']
+                        ) ?>
+                    </td>
+
+                    <td>
+                        <?= htmlspecialchars(
+                            $activity['user_email']
+                        ) ?>
+                    </td>
+
+                    <td>
+                        <?= htmlspecialchars(
+                            $activity['activity_log_action']
+                        ) ?>
+                    </td>
+
+                    <td>
+                        <?= htmlspecialchars(
+                            $activity['activity_log_status']
+                        ) ?>
+                    </td>
+
+                    <td>
+                        <?= htmlspecialchars(
+                            $activity['activity_log_ip_address']
+                        ) ?>
+                    </td>
+
+                    <td>
+                        <?= htmlspecialchars(
+                            $activity['activity_log_user_agent']
+                        ) ?>
+                    </td>
+
+                    <td>
+                        <?= htmlspecialchars(
+                            $activity['activity_log_created_at']
+                        ) ?>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        <?php endforeach; ?>
+
+    </table>
+        
 </body>
 </html>
