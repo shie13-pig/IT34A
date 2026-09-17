@@ -5,3 +5,7 @@ function redirect($path){
     exit();
 }
 ?>
+
+
+
+<!-- -- upadte user table to add new column for user status -->
