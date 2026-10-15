@@ -1,5 +1,5 @@
 <?php
-require_once('C:\xampp\htdocs\IT34A\config\config.php');
+require_once('config/config.php');
 
 $user_id = "root" ?? null;
 $user_email = "root" ?? null;
@@ -17,7 +17,7 @@ $button = [
     'Generate Report',
 ];
 ?>
-<table border="1" cellpadding="7" cellspacing="7">
+<table border="1" cellpadding="10" cellspacing="5" align="center">
     <tr>
         <th>Action</th>
         <th>Test</th>

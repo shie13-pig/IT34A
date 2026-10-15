@@ -1,12 +1,7 @@
 <?php
 
-function redirect($path){
-    header("Location: ".BASE_URL.$path);
-    exit;
-}
-
-function loginUser($pdo, $login, $password){
-    // Application quer #2
+function loginUser($pdo,$login,$password){
+    // Application query #2
     $sql = "
         SELECT 
             user_id,
@@ -38,6 +33,10 @@ function loginUser($pdo, $login, $password){
     $_SESSION['user_email'] = $user['user_email'];
     $_SESSION['user_username'] = $user['user_username'];
     $_SESSION['user_role'] = $user['user_role'];
+
+    // Initialize session in database
+    $_SESSION['session_id'] = startUserSession($pdo);
+    
     return true;
 }
 
