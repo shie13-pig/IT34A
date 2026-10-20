@@ -22,15 +22,13 @@ function loginUser($pdo,$login,$password){
     if(!$user){
         return false;
     }
-    if(!password_verify($password,$user['user_id'])){
+    if(!password_verify($password,$user['user_password'])){
         return false;
     }
-
-    // Check if user already has active session
-    if(hasActiveUserSession($pdo,$user['user_id'])){
+    // Check if user has an active session
+    if(hasActiveSession($pdo, $user['user_id'])){
         return 'active_session';
     }
-
     // Session variables
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['user_email'] = $user['user_email'];

@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../functions/sessions.php');
 require_once(__DIR__ . '/../functions/redirect.php');
 
 // define('','');
-define('BASE_URL','http://localhost/it34a');
+define('BASE_URL','http://localhost/IT34A');
 
 define('DB_HOST','localhost');
 define('DB_NAME','it34a_lab_db');

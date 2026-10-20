@@ -26,24 +26,17 @@ function startUserSession($pdo){
 
     return $pdo->lastInsertId();
 }
-
-
-// End user session
 function endUserSession($pdo){
-    
-    if(!isset($_SESSION['session_id'])){
-        return false;
-    }
-    
+
     $session_id = $_SESSION['session_id'];
 
     $stmt = $pdo->prepare("
         UPDATE user_sessions
-        SET 
-            session_end = NOW(),
-            session_duration = TIMESTAMPDIFF(
-                SECOND, 
-                session_start, 
+        SET
+            session_end=NOW(),
+            session_duration=TIMESTAMPDIFF(
+                SECOND,
+                session_start,
                 NOW()
             )
         WHERE session_id = :session_id
@@ -52,24 +45,25 @@ function endUserSession($pdo){
     return $stmt->execute([
         'session_id' => $session_id
     ]);
-    
+
 }
 
-// Function check user for active session
-function hasActiveUserSession($pdo,$user_id){
+// Function check if user session is active
+function hasActiveSession($pdo, $user_id){
 
-        $stmt = $pdo->prepare("
-            SELECT session_id
-            FROM user_sessions
-            WHERE user_id = :user_id
-            AND session_end IS NULL
-            LIMIT 1
-        ");
+    $stmt = $pdo->prepare("
+        SELECT session_id
+        FROM user_sessions
+        WHERE user_id = :user_id
+        AND session_end IS NULL
+        LIMIT 1
+    ");
 
-        $stmt->execute([
-            'user_id' => $user_id
-        ]);
+    $stmt->execute([
+        ':user_id' => $user_id
+    ]);
 
-        return (bool) $stmt->fetchColumn();
+    return (bool) $stmt->fetchColumn();
 }
+
 ?>
