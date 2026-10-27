@@ -1,13 +1,11 @@
 <?php
-require 'C:\xampp\htdocs\IT34A\config\config.php';
-require 'C:\xampp\htdocs\IT34A\config\functions.php';
 
+require 'config/config.php';
 
 if(isset($_SESSION['user_id'])){
     header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
-    exit;
+    
 }
-
 $error = '';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -15,33 +13,39 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $password = $_POST['password'] ?? '';
 
 
+    if($login=== '' || $password === ''){
+    $error = 'Invalid login credentials';
+       logActivity(
+        $pdo,
+        null,
+        $login,
+        'login',
+        'failed'
+       );
+    }else {
 
+       $result = loginUser($pdo,$login,$password);
 
-    if($login===''||$password===''){
-        $error = 'Invalid login credentials';
+       if($result===true){
+
         logActivity(
-            $pdo, 
-            null, 
-            $login, 
-            'login', 
-            'failed'
-            );
+            $pdo,
+            $_SESSION['user_id'],
+            $_SESSION['user_email'],
+            'login',
+            'success'
+        );
+      header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
+      exit;
 
-
+    } elseif ($result==='active_session'){
+          $error = 'This account is already logged in on another device';
     } else {
-        if(loginUser($pdo, $login, $password)){
-            
-            logActivity(
-                $pdo,
-                $_SESSION['user_id'],
-                $_SESSION['user_email'],
-                'login',
-                'success'
-            );
-            header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
-            exit;
-        }
+        $error = 'Invalid login credentials';
     }
+
+    }
+
 }
 
 ?>
@@ -51,24 +55,32 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
+
+<?php if($error): ?>
+
+    <p><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+
     <h1>User Login</h1>
-    <form method="POST">
-        <label>Username or email</label>
+    <form method = "POST">
+        <label> Username or email </label>
         <input type = "text"
-                name = "login"
-                required
-    >
-    <br>
-    <label>Password</label>
-    <input type = "password"
-            name = "password"
-            required
-    >
-    <br>
-    <button type="submit">Sign In</button>
+                        name = "login"
+                        required
+                    >
+                        <br>
+                        <label> Password </label>
+                        <input type = "password"
+                        name = "password"
+                        required
+                    >
+                        <br>
+                        <button type = "submit"> Sign In </button>
     </form>
+
+
 </body>
 </html>

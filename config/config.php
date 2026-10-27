@@ -1,13 +1,16 @@
 <?php
-session_start();
+    session_start();
 
-require_once(__DIR__ . '/../includes/activity-logger.php');
+require_once(__DIR__ . '/../functions/activity.php');
+require_once(__DIR__ . '/../functions/auth.php');
+require_once(__DIR__ . '/../functions/sessions.php');
+require_once(__DIR__ . '/../functions/redirect.php');
 
 // define('','');
-define('BASE_URL','http://localhost/it34a');
+define('BASE_URL','http://localhost/IT34A');
 
 define('DB_HOST','localhost');
-define('DB_NAME','it34_lab_db');
+define('DB_NAME','it34a_lab_db');
 define('DB_USER','root');
 define('DB_PASS','');
 
@@ -21,13 +24,14 @@ try{
         DB_PASS,
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
-    
-    //echo ("Connection Successful");
-    //echo ($user_id . $user_email .'connect_db'.'success');
-    //logActivity($pdo,$user_id,$user_email,'connect_db','success');
+
+    // echo ("Connection Successful");
+    // echo ($user_id . $user_email .'connect_db'.'success');
+    // logActivity($pdo,$user_id,$user_email,'connect_db','success');
 
 }catch(PDOException $e){
     die("Connection failed: " . $e->getMessage());
     
 }
+
 ?>
