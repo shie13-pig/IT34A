@@ -45,7 +45,7 @@ if($section === 'students'){
 
 }
 
-// Create Student
+// Create Students
 if($section==='students' && $action==='create'){
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -85,7 +85,7 @@ if($section==='students' && $action==='create'){
 
 }
 
-// Update Student
+// Update Students
 if($section=== 'students' && $action=== 'update'){
     $studentId = (int) ($_GET['id'] ?? 0);
 
@@ -149,7 +149,7 @@ if ($section === 'books') {
     $books = $stmt->fetchAll();
 }
 
-// Create Book
+// Create Books
 if ($section === 'books' && $action === 'create') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = trim($_POST['book_title'] ?? '');
@@ -179,7 +179,7 @@ if ($section === 'books' && $action === 'create') {
     }
 }
 
-// Update Book
+// Update Books
 if ($section === 'books' && $action === 'update') {
     $bookId = (int)($_GET['id'] ?? 0);
 
