@@ -1,18 +1,18 @@
--- Table #1 students table
+-- Table #1 student table
 CREATE TABLE IF NOT EXISTS students (
 
     -- Primary key for the students table
     student_id INT AUTO_INCREMENT PRIMARY KEY,
 
 
-    -- Student name
+    -- Students name
     student_first_name VARCHAR(50) NOT NULL,
     student_last_name VARCHAR(50) NOT NULL,
 
-    -- Student course
+    -- Students course
     student_course VARCHAR(50) NOT NULL,
 
-    -- Student created at timestamp
+    -- Students created at timestamp
     student_created_at TIMESTAMP NOT NULL 
     DEFAULT CURRENT_TIMESTAMP
 
