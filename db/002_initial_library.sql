@@ -5,14 +5,14 @@ CREATE TABLE IF NOT EXISTS students (
     student_id INT AUTO_INCREMENT PRIMARY KEY,
 
 
-    -- Students name
+    -- Student name
     student_first_name VARCHAR(50) NOT NULL,
     student_last_name VARCHAR(50) NOT NULL,
 
-    -- Students course
+    -- Student course
     student_course VARCHAR(50) NOT NULL,
 
-    -- Students created at timestamp
+    -- Student created at timestamp
     student_created_at TIMESTAMP NOT NULL 
     DEFAULT CURRENT_TIMESTAMP
 
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS students (
 DEFAULT CHARSET=utf8mb4 
 COLLATE=utf8mb4_general_ci;
 
--- Table #2 books 
+-- Table #2 book 
 
 CREATE TABLE IF NOT EXISTS books (
     -- Primary key for the books table
